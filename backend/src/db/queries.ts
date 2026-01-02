@@ -14,10 +14,15 @@ import {
 /* ----------------- */
 
 export const upsertUser = async (data: NewUser) => {
-    const existingUser = await getUserById(data.id);
-    if (existingUser) return updateUser(data.id, data);
-
-    return createUser(data);
+    const [user] = await db
+        .insert(users)
+        .values(data)
+        .onConflictDoUpdate({
+            target: users.id,
+            set: data,
+        })
+        .returning();
+    return user;
 };
 
 export const getUserById = async (id: string) => {
@@ -35,6 +40,11 @@ export const updateUser = async (id: string, data: Partial<NewUser>) => {
         .set(data)
         .where(eq(users.id, id))
         .returning();
+
+    if (!user) {
+        throw new Error(`User with id ${id} not found`);
+    }
+
     return user;
 };
 
@@ -81,6 +91,11 @@ export const updateProduct = async (id: string, data: Partial<NewProduct>) => {
         .set(data)
         .where(eq(products.id, id))
         .returning();
+
+    if (!product) {
+        throw new Error(`Product with id ${id} not found`);
+    }
+
     return product;
 };
 
@@ -89,6 +104,11 @@ export const deleteProduct = async (id: string) => {
         .delete(products)
         .where(eq(products.id, id))
         .returning();
+
+    if (!product) {
+        throw new Error(`Product with id ${id} not found`);
+    }
+
     return product;
 };
 
@@ -113,5 +133,10 @@ export const deleteComment = async (id: string) => {
         .delete(comments)
         .where(eq(comments.id, id))
         .returning();
+
+    if (!comment) {
+        throw new Error(`Comment with id ${id} not found`);
+    }
+
     return comment;
 };
