@@ -34,7 +34,7 @@ export const upsertUser = async (data: NewUser) => {
 };
 
 export const getUserById = async (id: string) => {
-    const user = db.query.users.findFirst({ where: eq(users.id, id) });
+    const user = await db.query.users.findFirst({ where: eq(users.id, id) });
 
     return checkResultExists(user, `User with id ${id} not found`);
 };
@@ -54,14 +54,14 @@ export const updateUser = async (id: string, data: Partial<NewUser>) => {
 /* ----------------- */
 
 export const getAllProducts = async () => {
-    return db.query.products.findMany({
+    return await db.query.products.findMany({
         with: { user: true },
         orderBy: (products, { desc }) => [desc(products.createdAt)],
     });
 };
 
 export const getProductById = async (id: string) => {
-    const product = db.query.products.findFirst({
+    const product = await db.query.products.findFirst({
         where: eq(products.id, id),
         with: {
             user: true,
@@ -76,7 +76,7 @@ export const getProductById = async (id: string) => {
 };
 
 export const getProductByUserId = async (userId: string) => {
-    return db.query.products.findMany({
+    return await db.query.products.findMany({
         where: eq(products.userId, userId),
         with: { user: true },
         orderBy: (products, { desc }) => [desc(products.createdAt)],
@@ -112,7 +112,7 @@ export const deleteProduct = async (id: string) => {
 /* ----------------- */
 
 export const getCommentById = async (id: string) => {
-    const comment = db.query.comments.findFirst({
+    const comment = await db.query.comments.findFirst({
         where: eq(comments.id, id),
         with: { user: true },
     });
