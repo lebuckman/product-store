@@ -9,6 +9,14 @@ import {
     type NewProduct,
 } from "./schema";
 
+function checkResultExists<T>(result: T | undefined, errMsg: string) {
+    if (!result) {
+        throw new Error(errMsg);
+    }
+
+    return result;
+}
+
 /* ----------------- */
 /* User Queries      */
 /* ----------------- */
@@ -26,12 +34,9 @@ export const upsertUser = async (data: NewUser) => {
 };
 
 export const getUserById = async (id: string) => {
-    return db.query.users.findFirst({ where: eq(users.id, id) });
-};
+    const user = db.query.users.findFirst({ where: eq(users.id, id) });
 
-export const createUser = async (data: NewUser) => {
-    const [user] = await db.insert(users).values(data).returning();
-    return user;
+    return checkResultExists(user, `User with id ${id} not found`);
 };
 
 export const updateUser = async (id: string, data: Partial<NewUser>) => {
@@ -41,11 +46,7 @@ export const updateUser = async (id: string, data: Partial<NewUser>) => {
         .where(eq(users.id, id))
         .returning();
 
-    if (!user) {
-        throw new Error(`User with id ${id} not found`);
-    }
-
-    return user;
+    return checkResultExists(user, `User with id ${id} not found`);
 };
 
 /* ----------------- */
@@ -60,7 +61,7 @@ export const getAllProducts = async () => {
 };
 
 export const getProductById = async (id: string) => {
-    return db.query.products.findFirst({
+    const product = db.query.products.findFirst({
         where: eq(products.id, id),
         with: {
             user: true,
@@ -70,6 +71,8 @@ export const getProductById = async (id: string) => {
             },
         },
     });
+
+    return checkResultExists(product, `Product with id ${id} not found`);
 };
 
 export const getProductByUserId = async (userId: string) => {
@@ -92,11 +95,7 @@ export const updateProduct = async (id: string, data: Partial<NewProduct>) => {
         .where(eq(products.id, id))
         .returning();
 
-    if (!product) {
-        throw new Error(`Product with id ${id} not found`);
-    }
-
-    return product;
+    return checkResultExists(product, `Product with id ${id} not found`);
 };
 
 export const deleteProduct = async (id: string) => {
@@ -105,11 +104,7 @@ export const deleteProduct = async (id: string) => {
         .where(eq(products.id, id))
         .returning();
 
-    if (!product) {
-        throw new Error(`Product with id ${id} not found`);
-    }
-
-    return product;
+    return checkResultExists(product, `Product with id ${id} not found`);
 };
 
 /* ----------------- */
@@ -117,10 +112,12 @@ export const deleteProduct = async (id: string) => {
 /* ----------------- */
 
 export const getCommentById = async (id: string) => {
-    return db.query.comments.findFirst({
+    const comment = db.query.comments.findFirst({
         where: eq(comments.id, id),
         with: { user: true },
     });
+
+    return checkResultExists(comment, `Comment with id ${id} not found`);
 };
 
 export const createComment = async (data: NewComment) => {
@@ -134,9 +131,5 @@ export const deleteComment = async (id: string) => {
         .where(eq(comments.id, id))
         .returning();
 
-    if (!comment) {
-        throw new Error(`Comment with id ${id} not found`);
-    }
-
-    return comment;
+    return checkResultExists(comment, `Comment with id ${id} not found`);
 };
