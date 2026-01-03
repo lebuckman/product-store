@@ -4,7 +4,6 @@ import * as queries from "../db/queries";
 import {
     BadRequestError,
     ForbiddenError,
-    NotFoundError,
     UnauthorizedError,
 } from "../errors/httpErrors";
 
@@ -61,11 +60,8 @@ export async function updateProduct(req: Request, res: Response) {
     const { id } = req.params;
     const { title, description, imageUrl } = req.body;
 
+    // Verify product exists (throws 404 if not found)
     const existingProduct = await queries.getProductById(id);
-    if (!existingProduct) {
-        throw new NotFoundError("Product not found");
-    }
-
     if (existingProduct.userId !== userId) {
         throw new ForbiddenError("You can only update your own products");
     }
@@ -87,11 +83,8 @@ export const deleteProduct = async (req: Request, res: Response) => {
 
     const { id } = req.params;
 
+    // Verify product exists (throws 404 if not found)
     const existingProduct = await queries.getProductById(id);
-    if (!existingProduct) {
-        throw new NotFoundError("Product not found");
-    }
-
     if (existingProduct.userId !== userId) {
         throw new ForbiddenError("You can only delete your own products");
     }

@@ -4,7 +4,6 @@ import * as queries from "../db/queries";
 import {
     BadRequestError,
     ForbiddenError,
-    NotFoundError,
     UnauthorizedError,
 } from "../errors/httpErrors";
 
@@ -20,10 +19,8 @@ export async function createComment(req: Request, res: Response) {
         throw new BadRequestError("Comment content is required");
     }
 
-    const existingProduct = await queries.getProductById(productId);
-    if (!existingProduct) {
-        throw new NotFoundError("Product not found");
-    }
+    // Verify comment exists (throws 404 if not found)
+    await queries.getProductById(productId);
 
     const comment = await queries.createComment({
         content,
@@ -42,10 +39,8 @@ export async function deleteComment(req: Request, res: Response) {
 
     const { commentId } = req.params;
 
+    // Verify comment exists (throws 404 if not found)
     const existingComment = await queries.getCommentById(commentId);
-    if (!existingComment) {
-        throw new NotFoundError("Comment not found");
-    }
 
     if (existingComment.userId !== userId) {
         throw new ForbiddenError("You can only delete your own comments");
