@@ -3,13 +3,9 @@ import { PaletteIcon } from "lucide-react";
 import THEMES from "../configs/themes";
 
 function ThemeSelector() {
-    const [theme, setTheme] = useState(() => {
-        if (typeof window !== "undefined") {
-            return localStorage.getItem("theme") || "dim";
-        }
-
-        return "dim";
-    });
+    const [theme, setTheme] = useState(
+        () => localStorage.getItem("theme") || "dim"
+    );
 
     useEffect(() => {
         document.documentElement.setAttribute("data-theme", theme);
