@@ -4,17 +4,14 @@ import * as queries from "../db/queries";
 import {
     BadRequestError,
     ForbiddenError,
-    UnauthorizedError,
 } from "../errors/httpErrors";
 
 export async function createComment(req: Request, res: Response) {
-    const { userId } = getAuth(req);
-    if (!userId) {
-        throw new UnauthorizedError();
-    }
-
+    // requireAuth() middleware guarantees userId is present
+    const userId = getAuth(req).userId!;
     const { productId } = req.params;
     const { content } = req.body;
+
     if (!content) {
         throw new BadRequestError("Comment content is required");
     }
@@ -32,11 +29,8 @@ export async function createComment(req: Request, res: Response) {
 }
 
 export async function deleteComment(req: Request, res: Response) {
-    const { userId } = getAuth(req);
-    if (!userId) {
-        throw new UnauthorizedError();
-    }
-
+    // requireAuth() middleware guarantees userId is present
+    const userId = getAuth(req).userId!;
     const { commentId } = req.params;
 
     // Verify comment exists (throws 404 if not found)

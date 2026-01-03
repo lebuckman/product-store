@@ -1,11 +1,7 @@
 import type { Request, Response } from "express";
 import { getAuth } from "@clerk/express";
 import * as queries from "../db/queries";
-import {
-    BadRequestError,
-    ForbiddenError,
-    UnauthorizedError,
-} from "../errors/httpErrors";
+import { BadRequestError, ForbiddenError } from "../errors/httpErrors";
 
 export async function getAllProducts(req: Request, res: Response) {
     const products = await queries.getAllProducts();
@@ -13,10 +9,8 @@ export async function getAllProducts(req: Request, res: Response) {
 }
 
 export async function getMyProducts(req: Request, res: Response) {
-    const { userId } = getAuth(req);
-    if (!userId) {
-        throw new UnauthorizedError();
-    }
+    // requireAuth() middleware guarantees userId is present
+    const userId = getAuth(req).userId!;
 
     const products = await queries.getProductByUserId(userId);
     res.json(products);
@@ -24,17 +18,16 @@ export async function getMyProducts(req: Request, res: Response) {
 
 export async function getProductById(req: Request, res: Response) {
     const { id } = req.params;
+
     const product = await queries.getProductById(id);
     res.json(product);
 }
 
 export async function createProduct(req: Request, res: Response) {
-    const { userId } = getAuth(req);
-    if (!userId) {
-        throw new UnauthorizedError();
-    }
-
+    // requireAuth() middleware guarantees userId is present
+    const userId = getAuth(req).userId!;
     const { title, description, imageUrl } = req.body;
+
     if (!title || !description || !imageUrl) {
         throw new BadRequestError(
             "Title, description, and imageUrl are required"
@@ -52,11 +45,8 @@ export async function createProduct(req: Request, res: Response) {
 }
 
 export async function updateProduct(req: Request, res: Response) {
-    const { userId } = getAuth(req);
-    if (!userId) {
-        throw new UnauthorizedError();
-    }
-
+    // requireAuth() middleware guarantees userId is present
+    const userId = getAuth(req).userId!;
     const { id } = req.params;
     const { title, description, imageUrl } = req.body;
 
@@ -76,11 +66,8 @@ export async function updateProduct(req: Request, res: Response) {
 }
 
 export const deleteProduct = async (req: Request, res: Response) => {
-    const { userId } = getAuth(req);
-    if (!userId) {
-        throw new UnauthorizedError();
-    }
-
+    // requireAuth() middleware guarantees userId is present
+    const userId = getAuth(req).userId!;
     const { id } = req.params;
 
     // Verify product exists (throws 404 if not found)
