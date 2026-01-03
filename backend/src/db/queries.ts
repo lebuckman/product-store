@@ -8,10 +8,15 @@ import {
     type NewComment,
     type NewProduct,
 } from "./schema";
+import { HttpError } from "../errors/httpErrors";
 
-function checkResultExists<T>(result: T | undefined, errMsg: string) {
+function checkResultExists<T>(
+    result: T | undefined,
+    status: number,
+    errMsg: string
+) {
     if (!result) {
-        throw new Error(errMsg);
+        throw new HttpError(status, errMsg);
     }
 
     return result;
@@ -36,7 +41,7 @@ export const upsertUser = async (data: NewUser) => {
 export const getUserById = async (id: string) => {
     const user = await db.query.users.findFirst({ where: eq(users.id, id) });
 
-    return checkResultExists(user, `User with id ${id} not found`);
+    return checkResultExists(user, 404, `User with id ${id} not found`);
 };
 
 export const updateUser = async (id: string, data: Partial<NewUser>) => {
@@ -46,7 +51,7 @@ export const updateUser = async (id: string, data: Partial<NewUser>) => {
         .where(eq(users.id, id))
         .returning();
 
-    return checkResultExists(user, `User with id ${id} not found`);
+    return checkResultExists(user, 404, `User with id ${id} not found`);
 };
 
 /* ----------------- */
@@ -72,7 +77,7 @@ export const getProductById = async (id: string) => {
         },
     });
 
-    return checkResultExists(product, `Product with id ${id} not found`);
+    return checkResultExists(product, 404, `Product with id ${id} not found`);
 };
 
 export const getProductByUserId = async (userId: string) => {
@@ -95,7 +100,7 @@ export const updateProduct = async (id: string, data: Partial<NewProduct>) => {
         .where(eq(products.id, id))
         .returning();
 
-    return checkResultExists(product, `Product with id ${id} not found`);
+    return checkResultExists(product, 404, `Product with id ${id} not found`);
 };
 
 export const deleteProduct = async (id: string) => {
@@ -104,7 +109,7 @@ export const deleteProduct = async (id: string) => {
         .where(eq(products.id, id))
         .returning();
 
-    return checkResultExists(product, `Product with id ${id} not found`);
+    return checkResultExists(product, 404, `Product with id ${id} not found`);
 };
 
 /* ----------------- */
@@ -117,7 +122,7 @@ export const getCommentById = async (id: string) => {
         with: { user: true },
     });
 
-    return checkResultExists(comment, `Comment with id ${id} not found`);
+    return checkResultExists(comment, 404, `Comment with id ${id} not found`);
 };
 
 export const createComment = async (data: NewComment) => {
@@ -131,5 +136,5 @@ export const deleteComment = async (id: string) => {
         .where(eq(comments.id, id))
         .returning();
 
-    return checkResultExists(comment, `Comment with id ${id} not found`);
+    return checkResultExists(comment, 404, `Comment with id ${id} not found`);
 };

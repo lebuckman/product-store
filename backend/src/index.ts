@@ -6,6 +6,7 @@ import { clerkMiddleware } from "@clerk/express";
 import { usersRouter } from "./routes/users";
 import { productsRouter } from "./routes/products";
 import { commentsRouter } from "./routes/comments";
+import errorHandler from "./middleware/errorHandler";
 
 const app = express();
 const PORT = ENV.PORT || 8000;
@@ -30,6 +31,8 @@ app.get("/", (req, res) => {
 app.use("/api/users", usersRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/comments", commentsRouter);
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
