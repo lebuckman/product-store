@@ -31,6 +31,8 @@ function ThemeSelector() {
                     <li key={t}>
                         <button
                             onClick={() => setTheme(t)}
+                            aria-label={`Select ${t} theme`}
+                            aria-current={theme === t ? "true" : undefined}
                             className={`flex justify-between ${
                                 theme === t
                                     ? "bg-primary text-primary-content"
