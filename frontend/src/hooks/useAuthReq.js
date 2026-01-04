@@ -2,33 +2,23 @@ import { useAuth } from "@clerk/clerk-react";
 import { useEffect } from "react";
 import api from "../lib/axios";
 
-// Ensure interceptor is registered only once (inside App.jsx)
-let isInterceptorRegistered = false;
-
 function useAuthReq() {
     const { isSignedIn, getToken, isLoaded } = useAuth();
 
     // Include session token in request header
     useEffect(() => {
-        if (isInterceptorRegistered) return;
-        isInterceptorRegistered = true;
-
         const interceptor = api.interceptors.request.use(async (config) => {
-            if (isSignedIn) {
-                const token = await getToken();
+            const token = await getToken();
 
-                if (token) {
-                    config.headers.Authorization = `Bearer ${token}`;
-                }
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
             }
+
             return config;
         });
 
-        return () => {
-            api.interceptors.request.eject(interceptor);
-            isInterceptorRegistered = false;
-        };
-    }, [isSignedIn, getToken]);
+        return () => api.interceptors.request.eject(interceptor);
+    }, [getToken]);
 
     return { isSignedIn, isClerkLoaded: isLoaded };
 }
