@@ -14,6 +14,7 @@ function useUserSync() {
         isPending,
         isSuccess,
         isError,
+        reset,
     } = useMutation({
         mutationFn: syncUser,
         onError: (error) => {
@@ -22,6 +23,12 @@ function useUserSync() {
     });
 
     useEffect(() => {
+        // Reset mutation state when user changes or signs out
+        if (!isSignedIn || !user) {
+            reset();
+            return;
+        }
+
         if (isSignedIn && user && !isPending && !isSuccess && !isError) {
             syncUserMutation({
                 email: user.primaryEmailAddress?.emailAddress,
@@ -29,7 +36,15 @@ function useUserSync() {
                 imageUrl: user.imageUrl,
             });
         }
-    }, [isSignedIn, user, isPending, isSuccess, isError]);
+    }, [
+        isSignedIn,
+        user,
+        syncUserMutation,
+        isPending,
+        isSuccess,
+        isError,
+        reset,
+    ]);
 
     return { isSynced: isSuccess };
 }
