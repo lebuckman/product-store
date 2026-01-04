@@ -10,8 +10,13 @@ import errorHandler from "./middleware/errorHandler";
 
 const app = express();
 const PORT = ENV.PORT || 8000;
+const FRONTEND_URL = ENV.FRONTEND_URL;
 
-app.use(cors({ origin: ENV.FRONTEND_URL, credentials: true }));
+if (!FRONTEND_URL) {
+    throw new Error("Add FRONTEND_URL to the .env file");
+}
+
+app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 app.use(clerkMiddleware());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
