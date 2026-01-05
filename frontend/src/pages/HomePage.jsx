@@ -77,12 +77,20 @@ const HomePage = () => {
                             <p className="text-base-content/40 text-sm">
                                 Be the first to share something!
                             </p>
-                            <Link
-                                to="/create"
-                                className="btn btn-primary btn-sm mt-2"
-                            >
-                                Create Product
-                            </Link>
+                            {isSignedIn ? (
+                                <Link
+                                    to="/create"
+                                    className="btn btn-primary btn-sm mt-2"
+                                >
+                                    Create Product
+                                </Link>
+                            ) : (
+                                <SignInButton mode="modal">
+                                    <button className="btn btn-primary">
+                                        Create Product
+                                    </button>
+                                </SignInButton>
+                            )}
                         </div>
                     </div>
                 ) : (
