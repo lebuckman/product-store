@@ -4,6 +4,7 @@ import useProduct from "../hooks/useProduct";
 import useDeleteProduct from "../hooks/useDeleteProduct";
 import LoadingSpinner from "../components/LoadingSpinner";
 import CommentsSection from "../components/CommentsSection";
+import ErrorCard from "../components/ErrorCard";
 import {
     ArrowLeftIcon,
     EditIcon,
@@ -33,16 +34,7 @@ function ProductPage() {
     }
 
     if (error || !product) {
-        return (
-            <div className="card bg-base-300 max-w-md mx-auto">
-                <div className="card-body items-center text-center">
-                    <h2 className="card-title text-error">Product not found</h2>
-                    <Link to="/" className="btn btn-primary btn-sm">
-                        Go Home
-                    </Link>
-                </div>
-            </div>
-        );
+        return <ErrorCard title={"Product not found"} />;
     }
 
     const isOwner = userId === product.userId;
