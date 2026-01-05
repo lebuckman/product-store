@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import useMyProducts from "../hooks/useMyProducts";
 import useDeleteProduct from "../hooks/useDeleteProduct";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 
 function ProfilePage() {
-    const navigate = useNavigate();
     const { data: products, isLoading, error } = useMyProducts();
     const deleteProduct = useDeleteProduct();
 
@@ -112,22 +111,18 @@ function ProfilePage() {
 
                                 {/* Product CTAs */}
                                 <div className="card-actions justify-end mt-2">
-                                    <button
-                                        onClick={() =>
-                                            navigate(`/products/${product.id}`)
-                                        }
+                                    <Link
+                                        to={`/products/${product.id}`}
                                         className="btn btn-ghost btn-xs gap-1"
                                     >
                                         <EyeIcon className="size-3" /> View
-                                    </button>
-                                    <button
-                                        onClick={() =>
-                                            navigate(`/edit/${product.id}`)
-                                        }
+                                    </Link>
+                                    <Link
+                                        to={`/edit/${product.id}`}
                                         className="btn btn-ghost btn-xs gap-1"
                                     >
                                         <EditIcon className="size-3" /> Edit
-                                    </button>
+                                    </Link>
                                     <button
                                         onClick={() => handleDelete(product.id)}
                                         className="btn btn-ghost btn-xs text-error gap-1"
