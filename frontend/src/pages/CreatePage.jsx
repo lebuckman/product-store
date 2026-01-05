@@ -27,7 +27,7 @@ const CreatePage = () => {
 
     return (
         <div className="max-w-lg mx-auto">
-            <Link to={"/"} className="btn btn-ghost btn-sm gap-1 mb-4">
+            <Link to={-1} className="btn btn-ghost btn-sm gap-1 mb-4">
                 <ArrowLeftIcon className="size-4" /> Back
             </Link>
 
