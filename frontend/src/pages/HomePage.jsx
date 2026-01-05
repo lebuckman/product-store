@@ -86,7 +86,7 @@ const HomePage = () => {
                                 </Link>
                             ) : (
                                 <SignInButton mode="modal">
-                                    <button className="btn btn-primary">
+                                    <button className="btn btn-primary btn-sm mt-2">
                                         Create Product
                                     </button>
                                 </SignInButton>

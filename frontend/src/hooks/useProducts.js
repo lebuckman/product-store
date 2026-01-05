@@ -7,6 +7,6 @@ function useProducts() {
         queryFn: getAllProducts,
     });
     return result;
-};
+}
 
 export default useProducts;
