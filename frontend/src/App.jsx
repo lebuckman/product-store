@@ -1,5 +1,6 @@
-import { Navigate, Route, Routes } from "react-router";
+import { Route, Routes } from "react-router";
 import Navbar from "./components/Navbar";
+import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -9,7 +10,7 @@ import useAuthReq from "./hooks/useAuthReq";
 import useUserSync from "./hooks/useUserSync";
 
 function App() {
-    const { isClerkLoaded, isSignedIn } = useAuthReq();
+    const { isClerkLoaded } = useAuthReq();
     useUserSync();
 
     if (!isClerkLoaded) return null;
@@ -24,23 +25,25 @@ function App() {
                     <Route
                         path="/profile"
                         element={
-                            isSignedIn ? <ProfilePage /> : <Navigate to={"/"} />
+                            <ProtectedRoute>
+                                <ProfilePage />
+                            </ProtectedRoute>
                         }
                     />
                     <Route
                         path="/create"
                         element={
-                            isSignedIn ? <CreatePage /> : <Navigate to={"/"} />
+                            <ProtectedRoute>
+                                <CreatePage />
+                            </ProtectedRoute>
                         }
                     />
                     <Route
                         path="/edit/:id"
                         element={
-                            isSignedIn ? (
+                            <ProtectedRoute>
                                 <EditProductPage />
-                            ) : (
-                                <Navigate to={"/"} />
-                            )
+                            </ProtectedRoute>
                         }
                     />
                 </Routes>
