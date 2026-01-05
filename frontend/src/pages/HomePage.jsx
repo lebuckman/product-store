@@ -7,7 +7,7 @@ import { SignInButton } from "@clerk/clerk-react";
 import { PackageIcon, SparklesIcon } from "lucide-react";
 
 const HomePage = () => {
-    const { data: products, isLoading, error } = useProducts();
+    const { data: products = [], isLoading, error } = useProducts();
     const { isSignedIn } = useAuthReq();
 
     if (isLoading) {
