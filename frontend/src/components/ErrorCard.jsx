@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 const ErrorCard = ({ title }) => (
     <div className="card bg-base-300 max-w-md mx-auto">
         <div className="card-body items-center text-center">
