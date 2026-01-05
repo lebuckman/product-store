@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import useMyProducts from "../hooks/useMyProducts";
 import useDeleteProduct from "../hooks/useDeleteProduct";
 import LoadingSpinner from "../components/LoadingSpinner";
+import ErrorCard from "../components/ErrorCard";
 import {
     PlusIcon,
     PackageIcon,
@@ -26,18 +27,7 @@ function ProfilePage() {
     }
 
     if (error) {
-        return (
-            <div className="card bg-base-300 max-w-md mx-auto">
-                <div className="card-body items-center text-center">
-                    <h2 className="card-title text-error">
-                        Failed to load products
-                    </h2>
-                    <Link to="/" className="btn btn-primary btn-sm">
-                        Go Home
-                    </Link>
-                </div>
-            </div>
-        );
+        return <ErrorCard title={"Failed to load products"} />;
     }
 
     return (

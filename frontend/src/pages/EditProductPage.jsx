@@ -4,6 +4,7 @@ import useProduct from "../hooks/useProduct";
 import useUpdateProduct from "../hooks/useUpdateProduct";
 import LoadingSpinner from "../components/LoadingSpinner";
 import EditProductForm from "../components/EditProductForm";
+import ErrorCard from "../components/ErrorCard";
 
 const EditProductPage = () => {
     const { id } = useParams();
@@ -18,33 +19,11 @@ const EditProductPage = () => {
     }
 
     if (error) {
-        return (
-            <div className="card bg-base-300 max-w-md mx-auto">
-                <div className="card-body items-center text-center">
-                    <h2 className="card-title text-error">
-                        Failed to load product
-                    </h2>
-                    <Link to={"/"} className="btn btn-primary btn-sm">
-                        Go Home
-                    </Link>
-                </div>
-            </div>
-        );
+        return <ErrorCard title={"Failed to load product"} />;
     }
 
     if (!product || product.userId !== userId) {
-        return (
-            <div className="card bg-base-300 max-w-md mx-auto">
-                <div className="card-body items-center text-center">
-                    <h2 className="card-title text-error">
-                        {!product ? "Not found" : "Access denied"}
-                    </h2>
-                    <Link to={"/"} className="btn btn-primary btn-sm">
-                        Go Home
-                    </Link>
-                </div>
-            </div>
-        );
+        return <ErrorCard title={!product ? "Not found" : "Access denied"} />;
     }
 
     return (
