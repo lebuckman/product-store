@@ -1,11 +1,10 @@
 import { Link } from "react-router";
 import { MessageCircleIcon } from "lucide-react";
 
-const MS_IN_WEEK = 7 * 24 * 60 * 60 * 1000;
-const oneWeekAgo = new Date(Date.now() - MS_IN_WEEK);
-
 const ProductCard = ({ product }) => {
-    const isNew = new Date(product.createdAt) > oneWeekAgo;
+    const MS_IN_WEEK = 7 * 24 * 60 * 60 * 1000;
+    const isNew =
+        new Date(product.createdAt) > new Date(Date.now() - MS_IN_WEEK);
 
     return (
         <Link
@@ -35,7 +34,7 @@ const ProductCard = ({ product }) => {
                 <div className="divider my-1"></div>
 
                 <div className="flex items-center justify-between">
-					{/* User Information */}
+                    {/* User Information */}
                     {product.user && (
                         <div className="flex items-center gap-2">
                             <div className="avatar">
@@ -51,7 +50,7 @@ const ProductCard = ({ product }) => {
                             </span>
                         </div>
                     )}
-					{/* Comment Information */}
+                    {/* Comment Information */}
                     {product.comments && (
                         <div className="flex items-center gap-1 text-base-content/50">
                             <MessageCircleIcon className="size-3" />
