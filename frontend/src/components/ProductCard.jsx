@@ -8,7 +8,7 @@ const ProductCard = ({ product }) => {
 
     return (
         <Link
-            to={`/product/${product.id}`}
+            to={`/products/${product.id}`}
             className="card bg-base-300 hover:bg-base-200 transition-colors"
         >
             <figure className="px-4 pt-4">
