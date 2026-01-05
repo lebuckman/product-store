@@ -3,7 +3,7 @@ import { deleteComment } from "../lib/api";
 
 const useDeleteComment = (productId) => {
     const queryClient = useQueryClient();
-    const result = useMutation({
+    return useMutation({
         mutationFn: deleteComment,
         onSuccess: () => {
             queryClient.invalidateQueries({
@@ -11,7 +11,6 @@ const useDeleteComment = (productId) => {
             });
         },
     });
-    return result;
 };
 
 export default useDeleteComment;

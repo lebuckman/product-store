@@ -3,13 +3,12 @@ import { deleteProduct } from "../lib/api";
 
 function useDeleteProduct() {
     const queryClient = useQueryClient();
-    const result = useMutation({
+    return useMutation({
         mutationFn: deleteProduct,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["myProducts"] });
         },
     });
-    return result;
 }
 
 export default useDeleteProduct;

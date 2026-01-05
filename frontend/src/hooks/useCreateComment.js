@@ -3,7 +3,7 @@ import { createComment } from "../lib/api";
 
 const useCreateComment = () => {
     const queryClient = useQueryClient();
-    const result = useMutation({
+    return useMutation({
         mutationFn: createComment,
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries({
@@ -11,7 +11,6 @@ const useCreateComment = () => {
             });
         },
     });
-    return result;
 };
 
 export default useCreateComment;
