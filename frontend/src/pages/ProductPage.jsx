@@ -28,7 +28,9 @@ function ProductPage() {
         }
     };
 
-    if (isLoading) return <LoadingSpinner />;
+    if (isLoading) {
+        return <LoadingSpinner />;
+    }
 
     if (error || !product) {
         return (
