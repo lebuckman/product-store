@@ -21,7 +21,7 @@ app.use(clerkMiddleware());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
     res.json({
         message:
             "Productify API - Powered by PostgreSQL, Drizzle ORM, & Clerk Auth",
