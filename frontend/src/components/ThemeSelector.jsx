@@ -6,7 +6,7 @@ function ThemeSelector() {
     const { theme, setTheme } = useTheme();
 
     return (
-        <div className="dropdown dropdown-end">
+        <div className="dropdown dropdown-center">
             <div
                 tabIndex={0}
                 role="button"
