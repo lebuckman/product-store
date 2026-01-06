@@ -18,7 +18,7 @@ const Navbar = () => {
                 <div className="flex-1">
                     <Link to="/" className="btn btn-ghost gap-2">
                         <ShoppingBagIcon className="size-5 text-primary" />
-                        <span className="text-lg font-bold uppercase tracking-wider">
+                        <span className="text-lg font-bold uppercase tracking-wider hidden sm:inline">
                             Productify
                         </span>
                     </Link>

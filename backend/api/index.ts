@@ -18,7 +18,7 @@ if (!FRONTEND_URL) {
 }
 
 const allowOrigins = [
-    `http://localhost:${PORT}`,
+    `http://localhost:5173`,
     FRONTEND_URL,
     /^https:\/\/product-store-.*\.vercel\.app$/, // Vercel previews
 ];
