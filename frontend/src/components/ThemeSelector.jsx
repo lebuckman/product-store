@@ -1,5 +1,5 @@
 import { ALL_THEMES } from "../lib/themes";
-import { useTheme } from "../../context/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 import { PaletteIcon } from "lucide-react";
 
 function ThemeSelector() {
