@@ -1,4 +1,10 @@
-const THEMES = [
+import { dark, light } from "@clerk/themes";
+
+export function getClerkTheme(daisyTheme) {
+    return DARK_THEMES.includes(daisyTheme) ? dark : light;
+}
+
+export const ALL_THEMES = [
     "light",
     "dark",
     "cupcake",
@@ -33,4 +39,18 @@ const THEMES = [
     "sunset",
 ];
 
-export default THEMES;
+export const DARK_THEMES = [
+    "dark",
+    "synthwave",
+    "halloween",
+    "forest",
+    "aqua",
+    "black",
+    "luxury",
+    "dracula",
+    "business",
+    "night",
+    "coffee",
+    "dim",
+    "sunset",
+];
