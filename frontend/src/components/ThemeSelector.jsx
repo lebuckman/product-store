@@ -1,16 +1,9 @@
-import { useEffect, useState } from "react";
+import { ALL_THEMES } from "../lib/themes";
+import { useTheme } from "../../context/ThemeContext";
 import { PaletteIcon } from "lucide-react";
-import THEMES from "../configs/themes";
 
 function ThemeSelector() {
-    const [theme, setTheme] = useState(
-        () => localStorage.getItem("theme") || "dim"
-    );
-
-    useEffect(() => {
-        document.documentElement.setAttribute("data-theme", theme);
-        localStorage.setItem("theme", theme);
-    }, [theme]);
+    const { theme, setTheme } = useTheme();
 
     return (
         <div className="dropdown dropdown-end">
@@ -27,7 +20,7 @@ function ThemeSelector() {
                 tabIndex={0}
                 className="dropdown-content menu bg-base-200 rounded-box z-50 w-56 p-2 shadow-xl max-h-96 overflow-y-auto flex-nowrap"
             >
-                {THEMES.map((t) => (
+                {ALL_THEMES.map((t) => (
                     <li key={t}>
                         <button
                             onClick={() => setTheme(t)}
