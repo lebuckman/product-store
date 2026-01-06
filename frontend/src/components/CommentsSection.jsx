@@ -75,7 +75,7 @@ const CommentsSection = ({ productId, comments = [], currentUserId }) => {
                     <SignInButton mode="modal">
                         <button className="btn btn-primary btn-sm gap-1">
                             <LogInIcon className="size-4" />
-                            Sign In
+                            <span className="hidden sm:inline">Sign In</span>
                         </button>
                     </SignInButton>
                 </div>
