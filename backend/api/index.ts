@@ -17,7 +17,13 @@ if (!FRONTEND_URL) {
     throw new Error("Add FRONTEND_URL to the .env file");
 }
 
-app.use(cors({ origin: FRONTEND_URL, credentials: true }));
+const allowOrigins = [
+    `http://localhost:${PORT}`,
+    FRONTEND_URL,
+    /^https:\/\/product-store-.*\.vercel\.app$/, // Vercel previews
+];
+
+app.use(cors({ origin: allowOrigins, credentials: true }));
 app.use(clerkMiddleware());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
