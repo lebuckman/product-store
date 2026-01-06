@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import { StrictMode, useMemo } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
@@ -18,14 +18,15 @@ const queryClient = new QueryClient();
 
 function ThemedClerkProvider({ children }) {
     const { theme } = useTheme();
+    const appearance = useMemo(
+        () => ({
+            baseTheme: getClerkTheme(theme),
+        }),
+        [theme]
+    );
 
     return (
-        <ClerkProvider
-            publishableKey={PUBLISHABLE_KEY}
-            appearance={{
-                theme: getClerkTheme(theme),
-            }}
-        >
+        <ClerkProvider publishableKey={PUBLISHABLE_KEY} appearance={appearance}>
             {children}
         </ClerkProvider>
     );
