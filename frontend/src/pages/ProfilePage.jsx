@@ -105,20 +105,29 @@ function ProfilePage() {
                                         to={`/products/${product.id}`}
                                         className="btn btn-ghost btn-xs gap-1"
                                     >
-                                        <EyeIcon className="size-3" /> View
+                                        <EyeIcon className="size-3" />{" "}
+                                        <span className="hidden sm:inline">
+                                            View
+                                        </span>
                                     </Link>
                                     <Link
                                         to={`/edit/${product.id}`}
                                         className="btn btn-ghost btn-xs gap-1"
                                     >
-                                        <EditIcon className="size-3" /> Edit
+                                        <EditIcon className="size-3" />{" "}
+                                        <span className="hidden sm:inline">
+                                            Edit
+                                        </span>
                                     </Link>
                                     <button
                                         onClick={() => handleDelete(product.id)}
                                         className="btn btn-ghost btn-xs text-error gap-1"
                                         disabled={deleteProduct.isPending}
                                     >
-                                        <Trash2Icon className="size-3" /> Delete
+                                        <Trash2Icon className="size-3" />{" "}
+                                        <span className="hidden sm:inline">
+                                            Delete
+                                        </span>
                                     </button>
                                 </div>
                             </div>
