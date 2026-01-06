@@ -1,6 +1,6 @@
 {
-  "watch": ["src"],
+  "watch": ["api", "src"],
   "ignore": ["src/**/*.spec.ts"],
   "ext": "ts, html, css, js, json",
-  "exec": "ts-node src/index.ts"
+  "exec": "ts-node api/index.ts"
 }

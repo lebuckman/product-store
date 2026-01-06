@@ -1,13 +1,13 @@
 import express from "express";
 import cors from "cors";
 import path from "node:path";
-import { ENV } from "./config/env";
+import { ENV } from "../src/config/env";
 import { clerkMiddleware } from "@clerk/express";
 
-import { usersRouter } from "./routes/users";
-import { productsRouter } from "./routes/products";
-import { commentsRouter } from "./routes/comments";
-import errorHandler from "./middleware/errorHandler";
+import { usersRouter } from "../src/routes/users";
+import { productsRouter } from "../src/routes/products";
+import { commentsRouter } from "../src/routes/comments";
+import errorHandler from "../src/middleware/errorHandler";
 
 const app = express();
 const PORT = ENV.PORT || 8000;
@@ -52,8 +52,12 @@ if (ENV.NODE_ENV === "production") {
     });
 }
 
-app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-}).on("error", (err) => {
-    console.error("Failed to start server:", err);
-});
+export default app;
+
+if (ENV.NODE_ENV !== "production") {
+    app.listen(PORT, () => {
+        console.log(`Server running at http://localhost:${PORT}`);
+    }).on("error", (err) => {
+        console.error("Failed to start server:", err);
+    });
+}
