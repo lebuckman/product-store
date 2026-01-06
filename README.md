@@ -42,7 +42,7 @@ A full-stack interactive product store build with PostgreSQL, Express, React, an
 ### Prerequisites
 
 - Node.js (recommend >=20.0.0)
-- Neon account for PostgresSQL database
+- Neon account for PostgreSQL database
 - Clerk account for authentication
 
 ### Environmental Variables
@@ -67,14 +67,14 @@ FRONTEND_URL=http://localhost:5173
 #### `/frontend/.env`
 
 ```env
-# Clerk Authentication
+# Clerk Authentication (.env)
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_xxxxx
 
-# Backend Connection (development)
+# Backend Connection (.env.development)
 VITE_API_URL=http://localhost
 VITE_API_PORT=8000
 
-# Backend Connection (production)
+# Backend Connection (.env.production)
 VITE_APP_NAME=
 ```
 
