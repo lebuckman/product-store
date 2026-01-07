@@ -1,6 +1,4 @@
 import { Route, Routes } from "react-router";
-import Navbar from "./components/Navbar";
-import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -8,6 +6,8 @@ import CreatePage from "./pages/CreatePage";
 import EditProductPage from "./pages/EditProductPage";
 import useAuthReq from "./hooks/useAuthReq";
 import useUserSync from "./hooks/useUserSync";
+import Layout from "./components/Layout";
+import ProtectedLayout from "./components/ProtectedLayout";
 
 function App() {
     const { isClerkLoaded } = useAuthReq();
@@ -17,37 +17,19 @@ function App() {
 
     return (
         <div className="min-h-screen bg-base-100">
-            <Navbar />
-            <main className="max-w-5xl mx-auto px-4 py-8">
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/products/:id" element={<ProductPage />} />
-                    <Route
-                        path="/profile"
-                        element={
-                            <ProtectedRoute>
-                                <ProfilePage />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/create"
-                        element={
-                            <ProtectedRoute>
-                                <CreatePage />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/edit/:id"
-                        element={
-                            <ProtectedRoute>
-                                <EditProductPage />
-                            </ProtectedRoute>
-                        }
-                    />
-                </Routes>
-            </main>
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<HomePage />} />
+                    <Route path="products/:id" element={<ProductPage />} />
+
+                    <Route element={<ProtectedLayout />}>
+                        <Route path="profile" element={<ProfilePage />} />
+                        <Route path="create" element={<CreatePage />} />
+                        <Route path="edit/:id" element={<EditProductPage />} />
+                    </Route>
+
+                </Route>
+            </Routes>
         </div>
     );
 }
